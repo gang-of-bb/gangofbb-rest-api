@@ -24,7 +24,7 @@ var MembershipFilters = require('../../middleware/membershipFilters');
         app.get('/home', this.index);
         app.get('/home/index', this.index);
         app.get('/home/documentation', this.docs);
-        app.get('/home/app', filters.authorize, this.app);
+        app.get('/home/application', filters.authorize, this.app);
     };
 
     /**
@@ -53,7 +53,7 @@ var MembershipFilters = require('../../middleware/membershipFilters');
      * @param  {[type]} res
      */
     HomeController.prototype.app = function(req, res) {
-        res.render('home/app');
+        res.render('home/application');
     };
 
     module.exports = HomeController;

@@ -31,7 +31,7 @@ var UserDal           = require('../dal/userDal');
     AccountController.prototype.routes = function(app) {
         app.get('/account/login', this.login);
         app.post('/account/login',
-            passport.authenticate('local', { successRedirect: '/', failureRedirect: '/account/login'}), 
+            passport.authenticate('local', { successRedirect: '/home/application', failureRedirect: '/account/login'}), 
             this.redirectHome);
         app.get('/account/logout', this.logout);
         app.get('/account/changePassword', filters.authorize, this.changePassword);

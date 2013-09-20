@@ -2,56 +2,101 @@
     Documentation - REST API
 </h1>
 
-<h3 class="text-info">GET /api/movies</h3>
-<h4>Paramètres</h4>
-<p>keyword, categoryId, offset, limit</p>
-<h4>Description</h4>
-<p>Recherche de films vérifiant les éventuels paramètres passés</p>
-<h4>Réponse</h4>
-<pre>
-{
-    "title": "Django Unchained",
-    "description": "Django Unchained ou Django déchaîné au Québec et au Nouveau-Brunswick est un western spaghetti1 américain écrit et réalisé par Quentin Tarantino, sorti en 2012.\nNommé pour cinq Oscars dont celui du meilleur film en 2013, le film est récompensé à deux reprises ; meilleur acteur dans un second rôle pour Christoph Waltz et meilleur scénario original pour Quentin Tarantino.",
-    "image": "http://upload.wikimedia.org/wikipedia/fr/thumb/2/20/Django_Unchained_logo.JPG/220px-Django_Unchained_logo.JPG",
-    "trailerUrl": "http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19353314",
-    "id": 22,
-    "createdAt": "2013-09-18T08:12:26.000Z",
-    "updatedAt": "2013-09-18T12:06:03.000Z",
-    "categoryId": 2
-}
-</pre>
+<h3 class="text-info">GET <a href="/api/movies">/api/movies</a></h3>
+  <h4>Paramètres</h4>
+  <p>keyword, categoryId, offset, limit</p>
+  <h4>Description</h4>
+  <p>Recherche de films vérifiant les éventuels paramètres passés</p>
+  <h4>Réponse</h4>
+  <pre>
+  {
+      "title": "Django Unchained",
+      "description": "Django Unchained ou Django déchaîné au Québec et au Nouveau-Brunswick est un western spaghetti1 américain écrit et réalisé par Quentin Tarantino, sorti en 2012.\nNommé pour cinq Oscars dont celui du meilleur film en 2013, le film est récompensé à deux reprises ; meilleur acteur dans un second rôle pour Christoph Waltz et meilleur scénario original pour Quentin Tarantino.",
+      "image": "http://upload.wikimedia.org/wikipedia/fr/thumb/2/20/Django_Unchained_logo.JPG/220px-Django_Unchained_logo.JPG",
+      "trailerUrl": "http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19353314",
+      "id": 22,
+      "createdAt": "2013-09-18T08:12:26.000Z",
+      "updatedAt": "2013-09-18T12:06:03.000Z",
+      "categoryId": 2
+  }
+  </pre>
 
-<h3 class="text-info">GET /api/movies/{id}</h3>
-<h4>Description</h4>
-<p>Movie détaillé</p>
-<h4>Réponse</h4>
-<pre>
-{
-  "title": "The Dark Knight Rises",
-  "description": "Batman est un personnage de fiction créé par Bob Kane et Bill Finger dans Detective Comics #27 en mai 1939. C'est un héros, à l'origine nommé \"Bat-Man\", qui a la particularité d’être sans pouvoirs. L'homme qui se cache sous ce costume est connu sous le nom de Bruce Wayne, bien que le costume et le nom aient été quelquefois utilisés par d'autres. Des surnoms lui sont parfois accolés : The caped crusader, The Dark Knight, The world greatest Detectiven 1. Batman opère dans la ville fictive américaine de Gotham City, aidé par des personnages tels que Robin, son maître d'hôtel Alfred Pennyworth ou encore le commissaire de police Jim Gordon.",
-  "image": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQNkURy_6q8fd6hoYSjZ0fGsx8_unpvTIjjbla94ud6op2Yn66MTw",
-  "trailerUrl": "http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19340318",
-  "id": 2,
-  "createdAt": "2013-09-18T11:17:36.000Z",
-  "updatedAt": "2013-09-18T12:16:22.000Z",
-  "categoryId": 7,
-  "category": {
-    "name": "comics",
-    "id": 7,
-    "createdAt": "2013-09-18T11:18:13.000Z",
-    "updatedAt": "2013-09-18T11:18:14.000Z"
+<h3 class="text-info">GET <a href="/api/movies/{id}">/api/movies/{id}</a></h3>
+  <h4>Description</h4>
+  <p>Movie détaillé</p>
+  <h4>Réponse</h4>
+  <pre>
+  {
+    "title": "The Dark Knight Rises",
+    "description": "Batman est un personnage de fiction créé par Bob Kane et Bill Finger dans Detective Comics #27 en mai 1939. C'est un héros, à l'origine nommé \"Bat-Man\", qui a la particularité d’être sans pouvoirs. L'homme qui se cache sous ce costume est connu sous le nom de Bruce Wayne, bien que le costume et le nom aient été quelquefois utilisés par d'autres. Des surnoms lui sont parfois accolés : The caped crusader, The Dark Knight, The world greatest Detectiven 1. Batman opère dans la ville fictive américaine de Gotham City, aidé par des personnages tels que Robin, son maître d'hôtel Alfred Pennyworth ou encore le commissaire de police Jim Gordon.",
+    "image": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQNkURy_6q8fd6hoYSjZ0fGsx8_unpvTIjjbla94ud6op2Yn66MTw",
+    "trailerUrl": "http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19340318",
+    "id": 2,
+    "createdAt": "2013-09-18T11:17:36.000Z",
+    "updatedAt": "2013-09-18T12:16:22.000Z",
+    "categoryId": 7,
+    "category": {
+      "name": "comics",
+      "id": 7,
+      "createdAt": "2013-09-18T11:18:13.000Z",
+      "updatedAt": "2013-09-18T11:18:14.000Z"
+    },
+    "comments": []
+  }
+  </pre>
+
+<h3 class="text-info">GET <a href="/api/categories">/api/categories</a></h3>
+  <h4>Description</h4>
+  <p>Liste des catégories</p>
+  <h4>format</h4>
+  <pre>
+  {
+    "id": 6,
+    "name": "thriller",
+    "createdAt": "2013-09-18T11:17:38.000Z",
+    "updatedAt": "2013-09-18T11:17:40.000Z",
+    "moviesCount": 1
   },
-  "comments": []
-}
-</pre>
+  {
+    "id": 7,
+    "name": "comics",
+    "createdAt": "2013-09-18T11:18:13.000Z",
+    "updatedAt": "2013-09-18T11:18:14.000Z",
+    "moviesCount": 2
+  }
+  </pre>
 
-<h3 class="text-info">GET /api/users/self</h3>
-<h4>Description</h4>
-<p>User détaillé</p>
-<h4>Réponse</h4>
-<pre>
-{
-  "id": 1,
-  "username": "bhtz"
-}
-</pre>
+<h3 class="text-info">GET <a href="/api/users/self">/api/users/self</a></h3>
+  <h4>Description</h4>
+  <p>User détaillé</p>
+  <h4>Réponse</h4>
+  <pre>
+  {
+    "id": 1,
+    "username": "bhtz"
+  }
+  </pre>
+
+<h3 class="text-info">PUT <a href="/api/users/self">/api/users/self</a></h3>
+  <h4>Description</h4>
+  <p>Mise à jour profil utilisateur</p>
+  <h4>Format</h4>
+  <pre>
+    TODO
+  </pre>
+
+<h3 class="text-info">POST /api/comments</h3>
+  <h4>Description</h4>
+  <p>Création d’un commentaire</p>
+  <h4>Format</h4>
+  <pre>
+  {
+    "content" : "lorem ipsum",
+    "movieId" : "1"
+  }
+  </pre>
+
+<h3 class="text-info">DELETE /api/comments/{id}</h3>
+  <h4>Description</h4>
+  <p>Suppression d’un commentaire</p>
+  <h4>format</h4>
