@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Mer 18 Septembre 2013 à 14:46
+-- Généré le : Ven 20 Septembre 2013 à 10:19
 -- Version du serveur: 5.5.8
 -- Version de PHP: 5.3.5
 
@@ -58,13 +58,16 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `movieId` int(11) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `comments`
 --
 
+INSERT INTO `comments` (`content`, `id`, `createdAt`, `updatedAt`, `movieId`, `userId`) VALUES
+('test', 1, '2013-09-19 09:14:50', '2013-09-19 09:14:50', 21, NULL);
 
 -- --------------------------------------------------------
 
@@ -82,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `movies` (
   `updatedAt` datetime NOT NULL,
   `categoryId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Contenu de la table `movies`
@@ -118,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
+  `userId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -125,5 +129,5 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Contenu de la table `users`
 --
 
-INSERT INTO `users` (`username`, `email`, `password`, `id`, `createdAt`, `updatedAt`) VALUES
-('bhtz', 'heintz.benjamin@gmail.com', '$2a$10$wM9vlQVOrOV4A.F.KGK5Huh5z/Rit2v7VLuqjc.Ovl089xOeeQOby', 1, '2013-09-17 09:14:23', '2013-09-17 09:14:23');
+INSERT INTO `users` (`username`, `email`, `password`, `id`, `createdAt`, `updatedAt`, `userId`) VALUES
+('bhtz', 'heintz.benjamin@gmail.com', '$2a$10$wM9vlQVOrOV4A.F.KGK5Huh5z/Rit2v7VLuqjc.Ovl089xOeeQOby', 1, '2013-09-17 09:14:23', '2013-09-17 09:14:23', NULL);
