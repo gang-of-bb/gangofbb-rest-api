@@ -39,8 +39,8 @@ var CategoryDal = require('../dal/categoryDAL');
     * @param {res} http response.
     */
     movieApiController.prototype.getAll = function(req, res) {
-        var predicate = movieSearchPredicateBuilder(req.query);        
-        movieDAL.getAll(predicate, function (movies) {
+        var predicateicate = movieSearchPredicateBuilder(req.query);  
+        movieDAL.getAll(predicateicate, function (movies) {
             res.send(movies);
         });
     };
@@ -66,33 +66,37 @@ var CategoryDal = require('../dal/categoryDAL');
     /**
      * return predicate from queryString
      * @param  {[String]} queryString
-     * @return {[prdicate]}
+     * @return {[predicate]}
      */
     function movieSearchPredicateBuilder(queryString){
         var predicate = {order: 'id DESC'};
-        var whereClause = [];
 
         var categoryId = queryString.categoryId;
         var keyword = queryString.keyword;
         var offset = queryString.offset;
-        var limit = queryString.limit;
-
-        var whereSql = "";
-        if(keyword)
-            whereSql += "title LIKE '"+keyword+"%'";
-        if(categoryId){
-            if(whereSql){whereSql += " AND ";}
-            whereSql += "categoryId = " + categoryId;
-        }
-        if(whereSql)
-            whereClause.push(whereSql);
-
+        var limit = parseInt(queryString.limit);
+        
         if(limit)
-            predicate.limit = limit;
+        {
+            if(limit > 200)
+            {
+                limit = 200;
+            }
+        }
+        else {
+            limit = 20;
+        }
+        predicate.limit = limit;
+
         if(offset)
             predicate.offset = offset;
 
-        predicate.where = whereClause.length == 0 ? null : whereClause;
+        if(keyword && categoryId)
+            predicate.where = ["categoryId = ? AND title LIKE ?", categoryId, keyword+'%'];
+        else if(keyword)
+            predicate.where = ["title LIKE ?", keyword+'%'];
+        else if(categoryId)
+            predicate.where = ['categoryId = ?', categoryId];
 
         return predicate;
     }
