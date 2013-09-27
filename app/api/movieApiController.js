@@ -39,8 +39,8 @@ var CategoryDal = require('../dal/categoryDAL');
     * @param {res} http response.
     */
     movieApiController.prototype.getAll = function(req, res) {
-        var predicateicate = movieSearchPredicateBuilder(req.query);  
-        movieDAL.getAll(predicateicate, function (movies) {
+        var predicate = movieSearchPredicateBuilder(req.query);  
+        movieDAL.getAll(predicate, function (movies) {
             res.send(movies);
         });
     };

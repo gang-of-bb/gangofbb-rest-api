@@ -37,6 +37,8 @@ var CommentDAL = require('../dal/commentDAL');
     * @param {res} http response.
     */
     commentApiController.prototype.post = function(req, res) {
+        var comment = req.body;
+        comment.publicationDate = new Date();
         commentDAL.save(req.body, function (comment) {
             res.send(comment);
         });

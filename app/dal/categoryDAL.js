@@ -53,7 +53,7 @@ var DbContext = require('../../db/dbContext');
         categoryDto.name = category.name;
         categoryDto.createdAt = category.createdAt;
         categoryDto.updatedAt = category.updatedAt;
-        categoryDto.moviesCount = category.movies.length;
+        categoryDto.movies = category.movies.length;
         return categoryDto;
     };
 

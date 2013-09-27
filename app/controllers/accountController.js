@@ -37,7 +37,7 @@ var UserDal           = require('../dal/userDal');
         app.get('/account/changePassword', filters.authorize, this.changePassword);
         app.post('/account/changePassword', filters.authorize, this.changePassword_post);
         app.get('/account/register', this.register);
-        app.post('/account/register', this.register_post);
+        app.post('/account/register', this.signup);
     };
 
     /**
@@ -69,15 +69,22 @@ var UserDal           = require('../dal/userDal');
     * [httppost]
     * Register post action.
     */
-    AccountController.prototype.register_post = function(req, res) {
+    AccountController.prototype.signup = function(req, res) {
         if (req.body.password === req.body.confirmPassword && req.body.password.length > 6) {
             userDal.getByUsername(req.body.username, function (user) {
                 if (!user) {
                     encryptPassword(req.body.password, function(hashedpassword){
                         var newUser = {};
-                        newUser.username = req.body.username;
-                        newUser.email = req.body.email
+                        var user = req.body;
+
+                        newUser.username = user.username;
+                        newUser.email = user.email
                         newUser.password = hashedpassword;
+                        newUser.firstname = user.firstname;
+                        newUser.lastname = user.lastname;
+                        newUser.city = user.city;
+                        newUser.birthday = user.birthday;
+                        newUser.gender = user.gender;
 
                         userDal.save(newUser, function (data) {
                             req.flash('flash', 'you successfully sign in !');

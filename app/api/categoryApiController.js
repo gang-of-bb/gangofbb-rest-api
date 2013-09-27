@@ -36,8 +36,8 @@ var CategoryDAL = require('../dal/categoryDAL');
     * @param {res} http response.
     */
     categoryApiController.prototype.getAll = function(req, res) {
-        categoryDAL.getAll(function (categorys) {
-            res.send(categorys);
+        categoryDAL.getAll(function (categories) {
+            res.send(categories);
         });
     };
 

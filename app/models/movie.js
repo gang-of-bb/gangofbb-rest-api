@@ -4,7 +4,10 @@ module.exports = function (db, DataTypes) {
 		title: DataTypes.STRING,
 		description: DataTypes.TEXT,
 		image : DataTypes.STRING,
-		trailerUrl : DataTypes.STRING
+		trailerUrl : DataTypes.STRING,
+		rate: DataTypes.INTEGER
+	}, {
+		timestamps: false,
 	});
 	
 	return movie;

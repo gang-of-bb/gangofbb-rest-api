@@ -17,7 +17,6 @@
 
     /**
      * Attach your model to DbContext like user to perform database sync.
-     * 
      */
     DbContext.prototype.entities = function() {
         this.user = this.db.import(modelsPath + 'user');
@@ -36,8 +35,9 @@
         this.movie.hasMany(this.comment, {as : 'Comments'});
         this.comment.belongsTo(this.movie);
 
-        this.user.hasMany(this.comment);
-        this.user.belongsTo(this.user);
+        this.user.hasMany(this.comment, {as : 'Comments', foreignKey: 'authorId'});
+        this.user.hasMany(this.comment, {as : 'Appreciations', foreignKey: 'userId'});
+        this.comment.belongsTo(this.user);
     };
 
     module.exports = DbContext;

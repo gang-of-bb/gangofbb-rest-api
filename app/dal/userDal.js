@@ -32,6 +32,20 @@ var DbContext = require('../../db/dbContext');
     };
 
     /**
+     * get user with his comments
+     * @param  {[type]}   userId
+     * @param  {Function} callback
+     */
+    UserDal.prototype.getWithComments = function(userId, callback) {
+        dbContext.user.find({
+            where: {id : userId},
+            include: [{ model: dbContext.comment, as: 'Appreciations' }]
+        }).success(function (user) {
+            callback(user);
+        });
+    };
+
+    /**
     * Get user by username.
     * @param {username} - user name.
     * @param {callback} - callback function. 
