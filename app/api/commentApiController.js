@@ -2,6 +2,7 @@
 * Module dependencies.
 */
 var CommentDAL = require('../dal/commentDAL');
+var MembershipFilters = require('../../middleware/membershipFilters');
 
 /**
 * commentApiController class
@@ -12,6 +13,7 @@ var CommentDAL = require('../dal/commentDAL');
     * Attributes.
     */
     var commentDAL = new CommentDAL();
+    var filters = new MembershipFilters();
 
     /**
     * Constructor.
@@ -26,8 +28,8 @@ var CommentDAL = require('../dal/commentDAL');
     * @param {app} - express app.
     */
     commentApiController.prototype.routes = function(app) {
-        app.post('/api/comments', this.post);
-        app.delete('/api/comments', this.delete);
+        app.post('/api/comments', filters.authorize, this.post);
+        app.delete('/api/comments/:id', filters.authorize, this.destroy);
     };
 
     /**
@@ -38,10 +40,15 @@ var CommentDAL = require('../dal/commentDAL');
     */
     commentApiController.prototype.post = function(req, res) {
         var comment = req.body;
-        comment.publicationDate = new Date();
-        commentDAL.save(req.body, function (comment) {
-            res.send(comment);
-        });
+        if(comment.movieId && comment.userId){
+            res.send(400);
+        }else{
+            comment.publicationDate = new Date();
+            comment.authorId = req.user.id;
+            commentDAL.save(req.body, function (comment) {
+                res.send(comment);
+            });
+        }
     };
 
     /**
@@ -50,9 +57,17 @@ var CommentDAL = require('../dal/commentDAL');
     * @param {req} http request.
     * @param {res} http response.
     */
-    commentApiController.prototype.delete = function(req, res) {
-        commentDAL.remove(req.body.id, function () {
-            res.send({mesage: 'comment delete'});
+    commentApiController.prototype.destroy = function(req, res) {
+        var commentId = req.params.id;
+        commentDAL.get(commentId, function(comment){
+            if(comment.authorId == req.user.id){
+                commentDAL.remove(commentId, function () {
+                    res.send('comments deleted');
+                });
+            }
+            else{
+                res.send(403);
+            }
         });
     };
 
