@@ -23,7 +23,10 @@ var MembershipFilters = require('../../middleware/membershipFilters');
         app.get('/', this.index);
         app.get('/home', this.index);
         app.get('/home/index', this.index);
+        app.get('/documentation', this.docs);
         app.get('/home/documentation', this.docs);
+        app.get('/team', this.team);
+        app.get('/home/team', this.team);
         app.get('/home/application', filters.authorize, this.app);
     };
 
@@ -54,6 +57,10 @@ var MembershipFilters = require('../../middleware/membershipFilters');
      */
     HomeController.prototype.app = function(req, res) {
         res.render('home/application');
+    };
+
+    HomeController.prototype.team = function(req, res) {
+        res.render('home/team');
     };
 
     module.exports = HomeController;
