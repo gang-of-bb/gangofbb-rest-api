@@ -40,9 +40,7 @@ Update database :
 
 Run the following command at project root:
 
-	microscope
-
-Select "run server"
+	microscope server
 
 Licence
 -------
