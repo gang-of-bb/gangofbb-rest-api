@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Serveur: localhost
--- Généré le : Ven 27 Septembre 2013 à 18:04
+-- Généré le : Mer 02 Octobre 2013 à 11:26
 -- Version du serveur: 5.5.8
 -- Version de PHP: 5.3.5
 
@@ -64,6 +64,25 @@ CREATE TABLE IF NOT EXISTS `comments` (
 -- Contenu de la table `comments`
 --
 
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `likes`
+--
+
+CREATE TABLE IF NOT EXISTS `likes` (
+  `movieId` int(11) NOT NULL DEFAULT '0',
+  `userId` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`movieId`,`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `likes`
+--
+
+INSERT INTO `likes` (`movieId`, `userId`) VALUES
+(22, 1);
 
 -- --------------------------------------------------------
 
