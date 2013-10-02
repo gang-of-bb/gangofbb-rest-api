@@ -2,6 +2,7 @@
  * module dependencies
  */
 var DbContext = require('../../db/dbContext');
+var MovieMapper = require('../core/movieMapper');
 
 /**
 * UserDal class
@@ -12,6 +13,7 @@ var DbContext = require('../../db/dbContext');
 	 * Attributes
 	 */
 	var dbContext = new DbContext();
+    var movieMapper = new MovieMapper();
         
     /**
     * Constructor.

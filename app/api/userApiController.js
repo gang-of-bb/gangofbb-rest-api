@@ -1,5 +1,7 @@
 var MembershipFilters = require('../../middleware/membershipFilters');
 var UserDal = require('../dal/userDal');
+var MovieDal = require('../dal/movieDal');
+var UserMapper = require('../core/userMapper');
 
 /**
  * UserApiController class.
@@ -10,7 +12,9 @@ var UserDal = require('../dal/userDal');
 	 * Attributes
 	 */
 	var userDal = new UserDal();
+	var movieDal = new MovieDal();
 	var filters = new MembershipFilters();
+	var userMapper = new UserMapper();
 
 	/**
 	* Constructor.
@@ -26,6 +30,7 @@ var UserDal = require('../dal/userDal');
 	UserApiController.prototype.routes = function(app) {
 		app.get('/api/users/self', filters.authorize,  this.show);
 		app.get('/api/users/:id', filters.authorize,  this.show);
+		app.get('/api/users/:id/movies', filters.authorize,  this.moviesLiked);
 		app.put('/api/users/self', filters.authorize,  this.update);
 	};
 
@@ -39,7 +44,7 @@ var UserDal = require('../dal/userDal');
 		if(userId){
 			userDal.getWithComments(userId, function(userEnt){
 				if(userEnt){
-					res.send(toJson(userEnt, true));
+					res.send(userMapper.toDto(userEnt, true));
 				}
 				else{
 					res.send(404);
@@ -48,7 +53,7 @@ var UserDal = require('../dal/userDal');
 		}else{
 			userDal.getWithComments(req.user.id, function(userEnt){
 				if(userEnt){
-					res.send(toJson(userEnt, true));
+					res.send(userMapper.toDto(userEnt, true));
 				}
 				else{
 					res.send(404);
@@ -72,7 +77,7 @@ var UserDal = require('../dal/userDal');
 				entity.email = user.email;
 				entity.city = user.city;
 				userDal.update(entity, function(data){
-					res.send(toJson(data, false));
+					res.send(userMapper.toDto(data, false));
 				});
 			}else{
 				res.send(404);
@@ -81,28 +86,20 @@ var UserDal = require('../dal/userDal');
 	};
 
 	/**
-	 * return dto fropm user entity
-	 * @param  {Entity} user
-	 * @return {Object} dto
+	 * get movies that user liked
+	 * @param  {[type]} req
+	 * @param  {[type]} res
 	 */
-	function toJson(user, isComplete){
-		var dto = {};
-
-		dto.id = user.id;
-		dto.username = user.username;
-		dto.firstname = user.firstname;
-		dto.lastname = user.lastname;
-		dto.email = user.email;
-		dto.gender = user.gender;
-		dto.city = user.city;
-		dto.birthday = user.birthday;
-
-		if(isComplete){
-			dto.comments = user.appreciations;
-		}
-
-		return dto;
-	}
+	UserApiController.prototype.moviesLiked = function(req, res) {
+		var userId = req.params.id;
+		movieDal.getLikedMovies(userId, function(movieDtos){
+			if(movieDtos){ 
+				res.send(movieDtos);
+			}else{
+				res.send(404);
+			}
+		});
+	};
 
 	module.exports = UserApiController;
 })();

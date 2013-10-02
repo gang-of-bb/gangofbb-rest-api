@@ -2,6 +2,7 @@
  * module dependencies
  */
 var DbContext = require('../../db/dbContext');
+var MovieMapper = require('../core/movieMapper');
 
 /**
 * movieDAL class
@@ -12,6 +13,7 @@ var DbContext = require('../../db/dbContext');
      * Attributes
      */
     var dbContext = new DbContext();
+    var movieMapper = new MovieMapper();
 
     /**
     * Constructor.
@@ -32,7 +34,7 @@ var DbContext = require('../../db/dbContext');
             include: [dbContext.category, { model: dbContext.comment, as: 'Comments' }]
         })
         .success(function(movie) {
-            callback(toDto(movie, true));
+            callback(movieMapper.toDto(movie, true));
         });
     };
 
@@ -43,51 +45,73 @@ var DbContext = require('../../db/dbContext');
     movieDAL.prototype.getAll = function(predicate, callback) {
         predicate.include = [{ model: dbContext.comment, as: 'Comments' }];
         dbContext.movie.findAll(predicate).success(function(movies) {
-            callback(toDtos(movies, false));
+            callback(movieMapper.toDtos(movies, false));
         });
     };
 
-
-        /**
-     * movies entity to dto
-     * @param  {Entity} movie
-     * @return {Object} dto
+    /**
+     * get movies liked by user
+     * @param  {[type]}   userId
+     * @param  {Function} callback
      */
-    var toDtos = function(movies, isComplete){
-        var dtos = [];
-
-        for (var i = 0; i < movies.length; i++) {
-            dtos.push(toDto(movies[i], isComplete));
-        };
-
-        return dtos;
+    movieDAL.prototype.getLikedMovies = function(userId, callback) {
+        dbContext.user.find(userId).success(function(user){
+            if(user){
+                user.getMovies().success(function(movies) {
+                    callback(movieMapper.toDtos(movies));
+                });
+            }else{
+                callback(null);
+            }
+        });
     };
 
     /**
-     * movie entity to dto
-     * @param  {Entity} movie
-     * @return {Object} dto
+     * like movie.
+     * @param  {[type]}   userId
+     * @param  {[type]}   movieId
+     * @param  {Function} callback
      */
-    var toDto = function(movie, isComplete){
-        var dto = {};
+    movieDAL.prototype.likeMovie = function(userId, movieId, callback) {
+        dbContext.movie.find(movieId).success(function(movie){
+            if(movie){      
+                dbContext.user.find(userId).success(function(user){
+                    if(user){
+                        movie.addLiker(user).success(function(){
+                            callback(true);
+                        });
+                    }else{
+                        callback(false);
+                    }
+                });
+            }else{
+                callback(false);
+            }
+        });
+    };
 
-        dto.id            = movie.id;
-        dto.title         = movie.title;
-        dto.description   = movie.description;
-        dto.image         = movie.image;
-        dto.trailerUrl    = movie.trailerUrl;
-        dto.rate          = movie.rate;
-        dto.category      = movie.category;
-        
-        var commentsDto   = {};
-        commentsDto.count = movie.comments.length;
-
-        if(isComplete){
-            commentsDto.items = movie.comments;
-        }
-        dto.comments = commentsDto;
-
-        return dto;
+    /**
+     * dislike movie
+     * @param  {[type]}   userId
+     * @param  {[type]}   movieId
+     * @param  {Function} callback
+     */
+    movieDAL.prototype.dislikeMovie = function(userId, movieId, callback) {
+        dbContext.movie.find(movieId).success(function(movie){
+            if(movie){      
+                dbContext.user.find(userId).success(function(user){
+                    if(user){
+                        movie.removeLiker(user).success(function(){
+                            callback(true);
+                        });
+                    }else{
+                        callback(false);
+                    }
+                });
+            }else{
+                callback(false);
+            }
+        });
     };
 
     module.exports = movieDAL;

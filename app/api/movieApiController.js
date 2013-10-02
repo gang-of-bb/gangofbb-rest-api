@@ -3,6 +3,8 @@
 */
 var MovieDAL = require('../dal/movieDAL');
 var CategoryDal = require('../dal/categoryDAL');
+var UserDal = require('../dal/userDAL');
+var MembershipFilters = require('../../middleware/membershipFilters');
 
 /**
 * movieApiController class
@@ -14,6 +16,8 @@ var CategoryDal = require('../dal/categoryDAL');
     */
     var movieDAL = new MovieDAL();
     var categoryDAL = new CategoryDal();
+    var userDal = new UserDal();
+    var filters = new MembershipFilters();
 
     /**
     * Constructor.
@@ -30,6 +34,8 @@ var CategoryDal = require('../dal/categoryDAL');
     movieApiController.prototype.routes = function(app) {
         app.get('/api/movies', this.getAll);
         app.get('/api/movies/:id', this.get);
+        app.post('/api/movies/:id/like', filters.authorize, this.like);
+        app.post('/api/movies/:id/dislike', filters.authorize, this.dislike);
     };
 
     /**
@@ -59,6 +65,40 @@ var CategoryDal = require('../dal/categoryDAL');
             }
             else{
             	res.send(404);
+            }
+        });
+    };
+
+    /**
+    * [httppost]
+    * movieApiController like action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    movieApiController.prototype.like = function(req, res) {
+        var movieId = req.params.id;
+        movieDAL.likeMovie(req.user.id, movieId, function(data){
+            if(data){
+                res.send('liked');
+            }else{
+                res.send(404);
+            }
+        });
+    };
+
+    /**
+    * [httppost]
+    * movieApiController dislike action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    movieApiController.prototype.dislike = function(req, res) {
+        var movieId = req.params.id;
+        movieDAL.dislikeMovie(req.user.id, movieId, function(data){
+            if(data){
+                res.send('disliked');
+            }else{
+                res.send(404);
             }
         });
     };

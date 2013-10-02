@@ -12,6 +12,9 @@
       <li class="list-group-item"><a href="#users-put">PUT /api/users/self</a></li>
       <li class="list-group-item"><a href="#comments-post">POST /api/comments</a></li>
       <li class="list-group-item"><a href="#comments-delete">DELETE /api/comments/{id}</a></li>
+      <li class="list-group-item"><a href="#users-movies">GET /api/users/{id}/movies</a></li>
+      <li class="list-group-item"><a href="#movies-like">POST /api/movies/{id}/like</a></li>
+      <li class="list-group-item"><a href="#movies-dislike">POST /api/movies/{id}/dislike</a></li>
     </ul>
   </div>
 
@@ -125,6 +128,32 @@
         <h4>Description</h4>
         <p>Suppression d’un commentaire</p>
         <h4>format</h4>
+
+      <h3 id="users-movies" class="text-info">GET /api/users/{id}/movies</h3>
+        <h4>Description</h4>
+        <p>Liste des movies que le user a liké</p>
+        <h4>Format</h4>
+        <pre>
+        {
+          "id": 20,
+          "title": "Space Cowboys",
+          "description": "Space Cowboys is a 2000 space drama film directed and produced by Clint Eastwood. Eastwood also stars in the film alongside Tommy Lee Jones, Donald Sutherland, and James Garner as four older \"ex-test pilots\" who are sent into space to repair an old Soviet satellite, unaware that it is armed with nuclear missiles. The original music score was composed by Eastwood and Lennie Niehaus.",
+          "image": "http://upload.wikimedia.org/wikipedia/en/thumb/9/93/Space_cowboys_ver3.jpg/220px-Space_cowboys_ver3.jpg",
+          "trailerUrl": "http://www.allocine.fr/_video/iblogvision.aspx?cmedia=19409628",
+          "rate": 2,
+          "comments": {
+            "count": null
+          }
+        }
+        </pre>
+
+      <h3 id="movies-like" class="text-info">POST /api/movies/{id}/like</h3>
+        <h4>Description</h4>
+        <p>like d'un movie</p>
+
+      <h3 id="movies-dislike" class="text-info">POST /api/movies/{id}/dislike</h3>
+        <h4>Description</h4>
+        <p>dislike d'un movie</p>
 
   </div>
 </div>
