@@ -19,6 +19,8 @@ Installation
 
 git clone https://github.com/gang-of-bb/gangofbb-rest-api.git
 
+	npm install
+
 Getting started
 ---------------
 
