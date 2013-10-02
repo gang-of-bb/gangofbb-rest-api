@@ -1,9 +1,9 @@
 /**
 * Module dependencies.
 */
-var MovieDAL = require('../dal/movieDAL');
-var CategoryDal = require('../dal/categoryDAL');
-var UserDal = require('../dal/userDAL');
+var MovieDAL = require('../dal/movieDal');
+var CategoryDal = require('../dal/categoryDal');
+var UserDal = require('../dal/userDal');
 var MembershipFilters = require('../../middleware/membershipFilters');
 
 /**

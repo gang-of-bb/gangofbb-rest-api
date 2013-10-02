@@ -1,7 +1,7 @@
 /**
 * Module dependencies.
 */
-var CommentDAL = require('../dal/commentDAL');
+var CommentDAL = require('../dal/commentDal');
 var MembershipFilters = require('../../middleware/membershipFilters');
 
 /**

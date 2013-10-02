@@ -1,7 +1,7 @@
 /**
 * Module dependencies.
 */
-var CategoryDAL = require('../dal/categoryDAL');
+var CategoryDAL = require('../dal/categoryDal');
 
 /**
 * categoryApiController class
