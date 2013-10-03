@@ -30,7 +30,7 @@ app.configure(function(){
 
     app.engine('ejs', engine);
     app.locals({_layoutFile: true});
-
+    
     app.use(function (req, res, next) {
         res.locals.req = req;
         next();
@@ -40,6 +40,8 @@ app.configure(function(){
         res.locals.path = url.parse(req.url).pathname;
         next();
     });
+
+    app.use(require('./middleware/cors'));
 
     app.use(express.logger('dev'));
     app.use(express.cookieParser());
