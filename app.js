@@ -8,6 +8,7 @@ var url           = require('url');
 var engine        = require('ejs-locals');
 var flash         = require('connect-flash');
 var Bootloader    = require('./bootloader');
+var cors          = require('cors');
 
 var passport      = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -41,8 +42,6 @@ app.configure(function(){
         next();
     });
 
-    app.use(require('./middleware/cors'));
-
     app.use(express.logger('dev'));
     app.use(express.cookieParser());
     app.use(express.bodyParser());
@@ -59,6 +58,11 @@ app.configure(function(){
         res.locals.flash = req.flash('flash');
         next();
     });
+    app.use(cors({
+            credentials : true,
+            origin : true
+        })
+    );
     app.use(app.router);
 });
 
