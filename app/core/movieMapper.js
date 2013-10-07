@@ -1,7 +1,11 @@
+var CommentMapper = require('./commentMapper');
+
 /**
  * MovieMapper class.
  */
 (function(){
+
+    var commentMapper = new CommentMapper();
 
 	/**
 	* Constructor.
@@ -28,7 +32,7 @@
         commentsDto.count = movie.comments == null ? null : movie.comments.length;
 
         if(isComplete){
-            commentsDto.items = movie.comments;
+            commentsDto.items = commentMapper.toDtos(movie.comments);
         }
         dto.comments = commentsDto;
 

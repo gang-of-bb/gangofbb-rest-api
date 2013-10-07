@@ -31,10 +31,16 @@ var MovieMapper = require('../core/movieMapper');
         dbContext.movie.find(
         { 
             where: { id: movieId },
-            include: [dbContext.category, { model: dbContext.comment, as: 'Comments' }]
+            include: [dbContext.category]
         })
         .success(function(movie) {
-            callback(movieMapper.toDto(movie, true));
+            dbContext.comment.findAll({ 
+                where: { movieId: movieId },
+                include: [{ model: dbContext.user, as: 'Author'}]
+            }).success(function(comments){
+                movie.comments = comments;
+                callback(movieMapper.toDto(movie, true));
+            });
         });
     };
 

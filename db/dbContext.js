@@ -37,7 +37,8 @@
 
         this.user.hasMany(this.comment, {as : 'Comments', foreignKey: 'authorId'});
         this.user.hasMany(this.comment, {as : 'Appreciations', foreignKey: 'userId'});
-        this.comment.belongsTo(this.user);
+        this.comment.belongsTo(this.user, {as : 'Author', foreignKey: 'authorId'});
+        this.comment.belongsTo(this.user, {as : 'User', foreignKey: 'userId'});
 
         this.user.hasMany(this.movie, {as: 'Movies', joinTableName: 'likes'});
         this.movie.hasMany(this.user, {as: 'Likers', joinTableName: 'likes'});
