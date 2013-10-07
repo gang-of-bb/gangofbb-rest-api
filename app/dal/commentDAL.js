@@ -21,6 +21,17 @@ var DbContext = require('../../db/dbContext');
     }
 
     /**
+     * get comment by id
+     * @param  {[type]}   commentId
+     * @param  {Function} callback
+     */
+    commentDAL.prototype.get = function(commentId, callback) {
+        dbContext.comment.find(commentId).success(function(comment){
+            callback(comment);
+        });
+    };
+
+    /**
      * save comment
      * @param  {Object}   comment
      * @param  {Function} callback
