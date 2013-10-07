@@ -27,7 +27,7 @@ var MovieMapper = require('../core/movieMapper');
      * @param  {Integer}   movieId
      * @param  {Function} callback
      */
-    movieDAL.prototype.get = function(movieId, callback) {
+    movieDAL.prototype.get = function(movieId, userId, callback) {
         dbContext.movie.find(
         { 
             where: { id: movieId },
@@ -39,7 +39,19 @@ var MovieMapper = require('../core/movieMapper');
                 include: [{ model: dbContext.user, as: 'Author'}]
             }).success(function(comments){
                 movie.comments = comments;
-                callback(movieMapper.toDto(movie, true));
+                movie.isliked = null;
+                if(userId){
+                    movie.getLikers({where : {userId : userId}}).success(function(data){
+                        if(data.length > 0){
+                            movie.isliked = true;
+                        }else{
+                            movie.isliked = false;
+                        }
+                        callback(movieMapper.toDto(movie, true));
+                    });
+                }else{
+                    callback(movieMapper.toDto(movie, true));
+                }
             });
         });
     };

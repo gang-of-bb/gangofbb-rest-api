@@ -59,7 +59,8 @@ var MembershipFilters = require('../../middleware/membershipFilters');
     */
     movieApiController.prototype.get = function(req, res) {
         var movieId = req.params.id;
-        movieDAL.get(movieId, function (movie) {
+        var userId = req.user == null ? null : req.user.id;
+        movieDAL.get(movieId, userId, function (movie) {
             if(movie){
             	res.send(movie);
             }

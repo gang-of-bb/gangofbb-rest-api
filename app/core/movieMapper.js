@@ -33,6 +33,7 @@ var CommentMapper = require('./commentMapper');
 
         if(isComplete){
             commentsDto.items = commentMapper.toDtos(movie.comments);
+            dto.isliked = movie.isliked;
         }
         dto.comments = commentsDto;
 
