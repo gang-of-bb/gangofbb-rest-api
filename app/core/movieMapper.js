@@ -29,10 +29,10 @@ var CommentMapper = require('./commentMapper');
         dto.category      = movie.category;
         
         var commentsDto   = {};
-        commentsDto.count = movie.comments == null ? null : movie.comments.length;
+        commentsDto.count = movie.comments == null ? 0 : movie.comments.length;
 
         if(isComplete){
-            commentsDto.items = commentMapper.toDtos(movie.comments);
+            commentsDto.items = movie.comments == null ? null : commentMapper.toDtos(movie.comments);
             dto.isliked = movie.isliked;
         }
         dto.comments = commentsDto;

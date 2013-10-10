@@ -43,6 +43,7 @@ var MovieMapper = require('../core/movieMapper');
                     movie.isliked = null;
                     if(userId){
                         movie.getLikers({where : {userId : userId}}).success(function(data){
+                            data
                             if(data.length > 0){
                                 movie.isliked = true;
                             }else{

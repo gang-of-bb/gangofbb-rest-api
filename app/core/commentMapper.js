@@ -27,7 +27,7 @@ var UserMapper = require('./userMapper');
 		dto.publicationDate = comment.publicationDate;
 		dto.id = comment.id;
 		if(comment.author){
-			dto.author = userMapper.toDto(comment.author, true);	
+			dto.author = userMapper.toDto(comment.author, false);	
 		}else{
 			dto.authorId = comment.authorId;
 		}

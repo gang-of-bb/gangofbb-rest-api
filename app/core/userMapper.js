@@ -30,7 +30,7 @@
         if(isComplete){
         	var commentsDto   = {};
 			commentsDto.count = user.comments == null ? null : user.comments.length;
-			commentsDto.items = this.userCommentToDtos(user.comments);
+			commentsDto.items = user.comments == null ? null : this.userCommentToDtos(user.comments);
 			dto.comments = commentsDto;
         }
 
@@ -74,6 +74,7 @@
 	 * @param  {[type]} comments
 	 */
 	UserMapper.prototype.userCommentToDtos = function(comments) {
+		console.log(comments);
 		var dtos = [];
 		for (var i = 0; i < comments.length; i++) {
 			dtos.push(this.userCommentToDto(comments[i]));
