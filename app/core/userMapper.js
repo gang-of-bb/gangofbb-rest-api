@@ -1,7 +1,14 @@
+var CommentMapper = require('./commentMapper');
+
 /**
  * UserMapper class.
  */
 (function(){
+
+	/**
+	 * Attributes
+	 */
+	var commentMapper = new CommentMapper();
 
 	/**
 	* Constructor.
@@ -18,18 +25,23 @@
 	UserMapper.prototype.toDto = function(user, isComplete) {
 		var dto = {};
 
-		dto.id = user.id;
-		dto.username = user.username;
-		dto.firstname = user.firstname;
-		dto.lastname = user.lastname;
-		dto.email = user.email;
-		dto.gender = user.gender;
-		dto.city = user.city;
-		dto.birthday = user.birthday;
+		dto.id            = user.id;
+		dto.username      = user.username;
+		dto.firstname     = user.firstname;
+		dto.lastname      = user.lastname;
+		dto.email         = user.email;
+		dto.gender        = user.gender;
+		dto.city          = user.city;
+		dto.birthday      = user.birthday;
+		
+		var commentsDto   = {};
+		commentsDto.count = user.appreciations == null ? null : user.appreciations.length;
 
-		if(isComplete){
-			dto.comments = user.appreciations;
-		}
+        if(isComplete){
+			commentsDto.items = commentMapper.toDtos(user.appreciations);
+			dto.isliked       = movie.isliked;
+        }
+        dto.comments = commentsDto;
 
 		return dto;
 	};
