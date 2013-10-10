@@ -34,25 +34,29 @@ var MovieMapper = require('../core/movieMapper');
             include: [dbContext.category]
         })
         .success(function(movie) {
-            dbContext.comment.findAll({ 
-                where: { movieId: movieId },
-                include: [{ model: dbContext.user, as: 'Author'}]
-            }).success(function(comments){
-                movie.comments = comments;
-                movie.isliked = null;
-                if(userId){
-                    movie.getLikers({where : {userId : userId}}).success(function(data){
-                        if(data.length > 0){
-                            movie.isliked = true;
-                        }else{
-                            movie.isliked = false;
-                        }
+            if(movie){
+                dbContext.comment.findAll({ 
+                    where: { movieId: movieId },
+                    include: [{ model: dbContext.user, as: 'Author'}]
+                }).success(function(comments){
+                    movie.comments = comments;
+                    movie.isliked = null;
+                    if(userId){
+                        movie.getLikers({where : {userId : userId}}).success(function(data){
+                            if(data.length > 0){
+                                movie.isliked = true;
+                            }else{
+                                movie.isliked = false;
+                            }
+                            callback(movieMapper.toDto(movie, true));
+                        });
+                    }else{
                         callback(movieMapper.toDto(movie, true));
-                    });
-                }else{
-                    callback(movieMapper.toDto(movie, true));
-                }
-            });
+                    }
+                });
+            }else{
+                callback(null);
+            }
         });
     };
 

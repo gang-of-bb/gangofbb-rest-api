@@ -3,6 +3,7 @@
  */
 var DbContext = require('../../db/dbContext');
 var MovieMapper = require('../core/movieMapper');
+var UserMapper = require('../core/userMapper');
 
 /**
 * UserDal class
@@ -14,6 +15,7 @@ var MovieMapper = require('../core/movieMapper');
 	 */
 	var dbContext = new DbContext();
     var movieMapper = new MovieMapper();
+    var userMapper = new UserMapper();
         
     /**
     * Constructor.
@@ -40,10 +42,16 @@ var MovieMapper = require('../core/movieMapper');
      */
     UserDal.prototype.getWithComments = function(userId, callback) {
         dbContext.user.find({
-            where: {id : userId},
-            include: [{ model: dbContext.comment, as: 'Appreciations' }]
+            where: {id : userId}
         }).success(function (user) {
-            callback(user);
+            dbContext.comment.findAll({
+                where : {userId : userId },
+                include : [{model : dbContext.user, as: 'Author'}]
+            }).success(function(comments){
+                user.comments = comments;
+                callback(user);
+            });
+            
         });
     };
 

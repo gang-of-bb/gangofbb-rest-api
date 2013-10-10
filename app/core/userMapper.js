@@ -1,14 +1,7 @@
-var CommentMapper = require('./commentMapper');
-
 /**
  * UserMapper class.
  */
 (function(){
-
-	/**
-	 * Attributes
-	 */
-	var commentMapper = new CommentMapper();
 
 	/**
 	* Constructor.
@@ -33,15 +26,13 @@ var CommentMapper = require('./commentMapper');
 		dto.gender        = user.gender;
 		dto.city          = user.city;
 		dto.birthday      = user.birthday;
-		
-		var commentsDto   = {};
-		commentsDto.count = user.appreciations == null ? null : user.appreciations.length;
 
         if(isComplete){
-			commentsDto.items = commentMapper.toDtos(user.appreciations);
-			dto.isliked       = movie.isliked;
+        	var commentsDto   = {};
+			commentsDto.count = user.comments == null ? null : user.comments.length;
+			commentsDto.items = this.userCommentToDtos(user.comments);
+			dto.comments = commentsDto;
         }
-        dto.comments = commentsDto;
 
 		return dto;
 	};
@@ -59,6 +50,35 @@ var CommentMapper = require('./commentMapper');
         };
 
         return dtos;
+	};
+
+	/**
+	 * comment with user to commentDto
+	 * @param  {[type]} comments
+	 */
+	UserMapper.prototype.userCommentToDto = function(comment) {
+		var dto = {};
+		dto.content = comment.content;
+		dto.publicationDate = comment.publicationDate;
+		dto.id = comment.id;
+		if(comment.author){
+			dto.author = this.toDto(comment.author, false);
+		}else{
+			dto.authorId = comment.authorId;
+		}
+		return dto;
+	};
+
+	/**
+	 * array of userComment toDto
+	 * @param  {[type]} comments
+	 */
+	UserMapper.prototype.userCommentToDtos = function(comments) {
+		var dtos = [];
+		for (var i = 0; i < comments.length; i++) {
+			dtos.push(this.userCommentToDto(comments[i]));
+		};
+		return dtos;
 	};
 
 	module.exports = UserMapper;

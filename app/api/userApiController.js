@@ -2,6 +2,7 @@ var MembershipFilters = require('../../middleware/membershipFilters');
 var UserDal = require('../dal/userDal');
 var MovieDal = require('../dal/movieDal');
 var UserMapper = require('../core/userMapper');
+var CommentMapper = require('../core/commentMapper');
 
 /**
  * UserApiController class.
@@ -14,6 +15,7 @@ var UserMapper = require('../core/userMapper');
 	var userDal = new UserDal();
 	var movieDal = new MovieDal();
 	var filters = new MembershipFilters();
+	var commentMapper = new CommentMapper();
 	var userMapper = new UserMapper();
 
 	/**
